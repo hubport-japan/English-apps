@@ -216,13 +216,24 @@
                     resultText = `<p><span style="color: #ff5555;">不正解...</span> 正解は「${correctAnswer}」</p>`;
                 }
                 
+                // 解答ボタンと入力欄を無効化する
                 document.getElementById('submit-button').disabled = true;
+                document.getElementById('answer-input').disabled = true;
+
+                // 結果を表示する
                 quizArea.innerHTML += resultText;
                 
-                setTimeout(() => {
+                // 「次の問題へ」ボタンを作成して追加する
+                const nextButton = document.createElement('button');
+                nextButton.id = 'next-button';
+                nextButton.textContent = (currentQuestionIndex < shuffledQuizData.length - 1) ? '次の問題へ' : '結果を見る';
+                quizArea.appendChild(nextButton);
+
+                // 「次の問題へ」ボタンがクリックされた時の処理
+                nextButton.addEventListener('click', () => {
                     currentQuestionIndex++;
                     displayQuestion();
-                }, 2000);
+                });
             }
 
             function displayResult() {
